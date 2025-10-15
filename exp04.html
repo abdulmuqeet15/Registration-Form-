@@ -3,130 +3,142 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form Validation</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 50px;
+            background-color: #f2f3f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-box {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
         }
 
         h2 {
             text-align: center;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: auto;
+            color: #333;
+            margin-bottom: 25px;
         }
 
         label {
-            display: block;
-            margin-top: 10px;
+            font-weight: bold;
+            color: #444;
         }
 
-        input,
+        input[type="text"],
+        input[type="password"],
         textarea {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 14px;
         }
 
-        button {
-            margin-top: 15px;
+        input[type="submit"] {
+            width: 100%;
             background-color: #007bff;
             color: white;
             border: none;
             padding: 10px;
-            width: 100%;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
 
-        button:hover {
+        input[type="submit"]:hover {
             background-color: #0056b3;
         }
     </style>
 
     <script>
         function validateForm() {
-            let fname = document.getElementById("fname").value;
-            let lname = document.getElementById("lname").value;
-            let password = document.getElementById("password").value;
-            let email = document.getElementById("email").value;
-            let mobile = document.getElementById("mobile").value;
-            let address = document.getElementById("address").value;
+            let firstName = document.getElementById("fname").value.trim();
+            let lastName = document.getElementById("lname").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let mobile = document.getElementById("mobile").value.trim();
+            let address = document.getElementById("address").value.trim();
 
-            // 1. First Name validation
-            let nameRegex = /^[A-Za-z]+$/;
-            if (fname.length < 3 || !nameRegex.test(fname)) {
-                alert("First name must contain only alphabets and be at least 3 characters long.");
+            let namePattern = /^[A-Za-z]+$/;
+            if (firstName.length < 6 || !namePattern.test(firstName)) {
+                alert("❌ First Name should contain only alphabets and be at least 6 characters long.");
                 return false;
             }
 
-            // 2. Password validation
+            if (lastName === "") {
+                alert("❌ Last Name cannot be empty.");
+                return false;
+            }
+
             if (password.length < 6) {
-                alert("Password must be at least 6 characters long.");
+                alert("❌ Password must be at least 6 characters long.");
                 return false;
             }
 
-            // 3. Email validation
-            let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-            if (!emailRegex.test(email)) {
-                alert("Please enter a valid email in the format name@domain.com.");
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                alert("❌ Please enter a valid email address (e.g. name@domain.com).");
                 return false;
             }
 
-            // 4. Mobile Number validation
-            let mobileRegex = /^[0-9]{10}$/;
-            if (!mobileRegex.test(mobile)) {
-                alert("Mobile number must contain exactly 10 digits.");
+            let mobilePattern = /^[0-9]{10}$/;
+            if (!mobilePattern.test(mobile)) {
+                alert("❌ Mobile number must contain exactly 10 digits.");
                 return false;
             }
 
-            // 5. Last Name and Address should not be empty
-            if (lname.trim() === "" || address.trim() === "") {
-                alert("Last Name and Address cannot be empty.");
+            if (address === "") {
+                alert("❌ Address cannot be empty.");
                 return false;
             }
 
-            alert("Registration Successful!");
+            alert("✅ Registration Successful!");
             return true;
         }
     </script>
 </head>
 
 <body>
-    <h2>Registration Page</h2>
+    <div class="form-box">
+        <h2>Registration Form</h2>
+        <form onsubmit="return validateForm()">
+            <label>First Name:</label>
+            <input type="text" id="fname">
 
-    <form onsubmit="return validateForm()">
-        <label>First Name:</label>
-        <input type="text" id="fname">
+            <label>Last Name:</label>
+            <input type="text" id="lname">
 
-        <label>Last Name:</label>
-        <input type="text" id="lname">
 
-        <label>Password:</label>
-        <input type="password" id="password">
 
-        <label>Email ID:</label>
-        <input type="text" id="email">
+            <label>Email ID:</label>
+            <input type="text" id="email">
 
-        <label>Mobile Number:</label>
-        <input type="text" id="mobile">
+            <label>Password:</label>
+            <input type="password" id="password">
 
-        <label>Address:</label>
-        <textarea id="address" rows="3"></textarea>
+            <label>Mobile Number:</label>
+            <input type="text" id="mobile">
 
-        <button type="submit">Register</button>
-    </form>
+            <label>Address:</label>
+            <textarea id="address" rows="3"></textarea>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
 </body>
 
 </html>
